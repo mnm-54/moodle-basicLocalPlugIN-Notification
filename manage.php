@@ -22,3 +22,17 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @var stdClass $plugin 
  */
+
+
+require_once(__DIR__ . '/../../config.php');
+
+$PAGE->set_url(new moodle_url('/local/notification/manage.php'));
+$PAGE->set_context(\context_system::instance());
+$PAGE->set_title('Manage Notification');
+
+
+echo $OUTPUT->header();
+
+echo "<h1>hello</h1>";
+
+echo $OUTPUT->footer();
