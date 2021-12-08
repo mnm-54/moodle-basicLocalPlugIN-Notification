@@ -22,3 +22,9 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @var stdClass $plugin 
  */
+
+
+function local_notification_before_footer()
+{
+    // \core\notification::add("a test notification", \core\output\notification::NOTIFY_WARNING);
+}
