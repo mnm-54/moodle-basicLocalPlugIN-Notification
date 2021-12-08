@@ -25,16 +25,20 @@
 
 
 require_once(__DIR__ . '/../../config.php');
+global $DB;
 
 $PAGE->set_url(new moodle_url('/local/notification/edit.php'));
 $PAGE->set_context(\context_system::instance());
 $PAGE->set_title('Manage Notification');
 
 
+$notifications = $DB->get_records('local_notification');
+
 echo $OUTPUT->header();
 
 $templetecontext = (object)[
-    'texttodisplay' => 'list of all messages'
+    'notifications' => array_values($notifications),
+    'editurl' => new moodle_url('/local/notification/edit.php'),
 ];
 echo $OUTPUT->render_from_template('local_notification/manage', $templetecontext);;
 
