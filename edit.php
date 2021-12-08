@@ -27,25 +27,32 @@
 require_once(__DIR__ . '/../../config.php');
 require_once($CFG->dirroot . '/local/notification/classes/form/edit.php');
 
+global $DB;
+
 $PAGE->set_url(new moodle_url('/local/notification/manage.php'));
 $PAGE->set_context(\context_system::instance());
 $PAGE->set_title('edit Notification');
 
 $mform = new edit();
 
-echo $OUTPUT->header();
-
 //Form processing and displaying is done here
 if ($mform->is_cancelled()) {
     //Handle form cancel operation, if cancel button is present on form
+    redirect($CFG->wwwroot . '/local/notification/manage.php', "you cancelled the message form");
 } else if ($fromform = $mform->get_data()) {
     //In this case you process validated data. $mform->get_data() returns data posted in form.
-} else {
-    // this branch is executed if the form is submitted but the data doesn't validate and the form should be redisplayed
-    // or on the first display of the form.
 
-    //displays the form
-    $mform->display();
+    $recordtoinsert = new stdClass();
+    $recordtoinsert->notificationtext = $fromform->notificationtext;
+    $recordtoinsert->notificationtype = $fromform->notificationtype;
+
+    $DB->insert_record('local_notification', $recordtoinsert);
+
+    redirect($CFG->wwwroot . '/local/notification/manage.php', "you created a new notification: " . $fromform->notificationtype);
 }
+
+echo $OUTPUT->header();
+
+$mform->display();
 
 echo $OUTPUT->footer();
