@@ -31,14 +31,14 @@ global $DB;
 
 $PAGE->set_url(new moodle_url('/local/notification/manage.php'));
 $PAGE->set_context(\context_system::instance());
-$PAGE->set_title('edit Notification');
+$PAGE->set_title(get_string('title_edit', 'local_notification'));
 
 $mform = new edit();
 
 //Form processing and displaying is done here
 if ($mform->is_cancelled()) {
     //Handle form cancel operation, if cancel button is present on form
-    redirect($CFG->wwwroot . '/local/notification/manage.php', "you cancelled the message form");
+    redirect($CFG->wwwroot . '/local/notification/manage.php', get_string('cancelled_form', 'local_notification'));
 } else if ($fromform = $mform->get_data()) {
     //In this case you process validated data. $mform->get_data() returns data posted in form.
 
@@ -48,7 +48,7 @@ if ($mform->is_cancelled()) {
 
     $DB->insert_record('local_notification', $recordtoinsert);
 
-    redirect($CFG->wwwroot . '/local/notification/manage.php', "you created a new notification: " . $fromform->notificationtype);
+    redirect($CFG->wwwroot . '/local/notification/manage.php', get_string('created_notification', 'local_notification') . $fromform->notificationtype);
 }
 
 echo $OUTPUT->header();

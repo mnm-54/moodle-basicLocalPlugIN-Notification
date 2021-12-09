@@ -36,9 +36,9 @@ class edit extends moodleform
 
         $mform = $this->_form; // Don't forget the underscore! 
 
-        $mform->addElement('text', 'notificationtext', 'Notification Text'); // Add elements to your form
+        $mform->addElement('text', 'notificationtext',  get_string('notification_txt', 'local_notification')); // Add elements to your form
         $mform->setType('notificationtext', PARAM_NOTAGS);                   //Set type of element
-        $mform->setDefault('notificationtext', 'Please enter your msg');        //Default value
+        $mform->setDefault('notificationtext', get_string('enter_notification', 'local_notification'));        //Default value
 
 
         $choices = array();
@@ -48,7 +48,7 @@ class edit extends moodleform
             2 => \core\output\notification::NOTIFY_INFO,
             3 => \core\output\notification::NOTIFY_ERROR
         );
-        $mform->addElement('select', 'notificationtype', 'Notification type', $choices);
+        $mform->addElement('select', 'notificationtype', get_string('notification_typ', 'local_notification'), $choices);
         $mform->setDefault('notificationtype', 2);
         $mform->setAdvanced('mailformat');
 

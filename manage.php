@@ -29,7 +29,7 @@ global $DB;
 
 $PAGE->set_url(new moodle_url('/local/notification/edit.php'));
 $PAGE->set_context(\context_system::instance());
-$PAGE->set_title('Manage Notification');
+$PAGE->set_title(get_string('title_manage', 'local_notification'));
 
 
 $notifications = $DB->get_records('local_notification');
