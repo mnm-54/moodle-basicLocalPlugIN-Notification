@@ -26,5 +26,17 @@
 
 function local_notification_before_footer()
 {
-    // \core\notification::add("a test notification", \core\output\notification::NOTIFY_WARNING);
+    global $DB;
+    $notifications = $DB->get_records('local_notification');
+
+    $choices = array(
+        0 => \core\output\notification::NOTIFY_SUCCESS,
+        1 => \core\output\notification::NOTIFY_WARNING,
+        2 => \core\output\notification::NOTIFY_INFO,
+        3 => \core\output\notification::NOTIFY_ERROR
+    );
+
+    foreach ($notifications as $notification) {
+        \core\notification::add($notification->notificationtext, $choices[$notification->notificationtype]);
+    }
 }
