@@ -29,9 +29,11 @@ function local_notification_before_footer()
     global $DB, $USER;
     //$notifications = $DB->get_records('local_notification');
 
-    $sql = "SELECT ln.id, ln.notificationtext, ln.notificationtype FROM {local_notification} ln 
-            left join {local_notification_read} lnr on ln.id=lnr.notification_id
-            where lnr.userid <> :userid or lnr.userid IS NULL";
+    $sql = "SELECT ln.id, ln.notificationtext, ln.notificationtype 
+            FROM {local_notification} ln 
+            LEFT OUTER JOIN {local_notification_read} lnr ON ln.id = lnr.notification_id 
+            WHERE lnr.userid <> :userid 
+            OR lnr.userid IS NULL";
 
     $params = [
         'userid' => $USER->id

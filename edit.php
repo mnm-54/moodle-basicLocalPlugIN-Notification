@@ -29,7 +29,7 @@ require_once($CFG->dirroot . '/local/notification/classes/form/edit.php');
 
 global $DB;
 
-$PAGE->set_url(new moodle_url('/local/notification/manage.php'));
+$PAGE->set_url(new moodle_url('/local/notification/edit.php'));
 $PAGE->set_context(\context_system::instance());
 $PAGE->set_title(get_string('title_edit', 'local_notification'));
 

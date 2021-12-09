@@ -27,7 +27,7 @@
 require_once(__DIR__ . '/../../config.php');
 global $DB;
 
-$PAGE->set_url(new moodle_url('/local/notification/edit.php'));
+$PAGE->set_url(new moodle_url('/local/notification/manage.php'));
 $PAGE->set_context(\context_system::instance());
 $PAGE->set_title(get_string('title_manage', 'local_notification'));
 
