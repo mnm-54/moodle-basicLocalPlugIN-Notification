@@ -26,8 +26,19 @@
 
 function local_notification_before_footer()
 {
-    global $DB;
-    $notifications = $DB->get_records('local_notification');
+    global $DB, $USER;
+    //$notifications = $DB->get_records('local_notification');
+
+    $sql = "SELECT ln.id, ln.notificationtext, ln.notificationtype FROM {local_notification} ln 
+            left join {local_notification_read} lnr on ln.id=lnr.notification_id
+            where lnr.userid <> :userid or lnr.userid IS NULL";
+
+    $params = [
+        'userid' => $USER->id
+    ];
+
+    $notifications = $DB->get_records_sql($sql, $params);
+    //die(var_dump($notifications));
 
     $choices = array(
         0 => \core\output\notification::NOTIFY_SUCCESS,
@@ -38,5 +49,14 @@ function local_notification_before_footer()
 
     foreach ($notifications as $notification) {
         \core\notification::add($notification->notificationtext, $choices[$notification->notificationtype]);
+
+        // now creating record for the read notification
+
+        $readrecord = new stdClass();
+        $readrecord->notification_id = $notification->id;
+        $readrecord->userid = $USER->id;
+        $readrecord->timeread = time();
+
+        $DB->insert_record('local_notification_read', $readrecord);
     }
 }
